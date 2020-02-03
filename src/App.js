@@ -3,6 +3,9 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
+import AllArticles from "./components/AllArticles/AllArticles";
+import ArticlesById from "./components/ArticlesById/ArticlesById";
+import ViewComments from "./components/ViewComments/ViewComments";
 import { Router } from "@reach/router";
 
 function App() {
@@ -12,6 +15,9 @@ function App() {
       <Navbar />
       <Router>
         <Home path="/" />
+        <AllArticles path="/articles" />
+        <ArticlesById path="/articles/:id"></ArticlesById>
+        <ViewComments path="/articles/:id/comments"></ViewComments>
       </Router>
     </div>
   );
