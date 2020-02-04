@@ -4,12 +4,15 @@ import AddComment from "../AddComment/AddComment";
 
 class ViewComments extends React.Component {
   state = {
-    comments: null
+    comments: null,
+    isLoading: true
   };
 
   render() {
-    const { comments } = this.state;
-    if (comments) {
+    const { comments, isLoading } = this.state;
+    if (isLoading) {
+      return <p>Loading...</p>;
+    } else {
       return (
         <div>
           <form>
@@ -30,25 +33,27 @@ class ViewComments extends React.Component {
           <AddComment addItem={this.addItem} id={this.props.id} />
         </div>
       );
-    } else {
-      return <p>Loading...</p>;
     }
   }
 
   componentDidMount() {
-    axios
-      .get(
-        `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
-      )
-      .then(({ data }) => {
-        console.log(data, "THIS IS THE DATA");
-        this.setState({
-          comments: data.comments
+    const { isLoading } = this.state;
+    if (isLoading) {
+      axios
+        .get(
+          `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
+        )
+        .then(({ data }) => {
+          console.log(data, "THIS IS THE DATA");
+          this.setState({
+            comments: data.comments,
+            isLoading: false
+          });
+        })
+        .catch(err => {
+          console.log(err, "error in CDU for ViewComments");
         });
-      })
-      .catch(err => {
-        console.log(err, "error in CDU for ViewComments");
-      });
+    }
   }
 
   addItem = newComment => {
