@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import ViewComments from "../ViewComments/ViewComments";
 import { Link } from "@reach/router";
 
 class ArticlesById extends React.Component {
@@ -19,11 +20,13 @@ class ArticlesById extends React.Component {
             comment count: {this.state.singleArticleData.comment_count} <br />
             votes: {this.state.singleArticleData.votes}
           </p>
-          <Link
-            to={`/students/${this.state.singleArticleData.article_id}/comments`}
+          {/* <Link
+            // props={this.props}
+            to={`/articles/${this.state.singleArticleData.article_id}/comments`}
           >
             <button>View Comments</button>
-          </Link>
+          </Link> */}
+          <ViewComments id={this.props.id} />
         </form>
       );
     } else {
@@ -35,6 +38,7 @@ class ArticlesById extends React.Component {
     axios
       .get("https://kirsty-g-nc-news.herokuapp.com/api/articles/")
       .then(({ data }) => {
+        console.log(data);
         this.setState({
           singleArticleData: data.articles
         });

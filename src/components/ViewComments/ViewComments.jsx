@@ -7,12 +7,22 @@ class ViewComments extends React.Component {
   };
 
   render() {
-    console.log(this.state.comments);
+    console.log(this.state.comments, "<<<render State");
     if (this.state.comments) {
       return (
-        <form>
-          <p>{this.state.comments}</p>
-        </form>
+        <ul>
+          {this.state.comments.map(comment => {
+            return (
+              <li key={comment.comment_id}>
+                author: {comment.author} <br />
+                comment: {comment.body} <br />
+                created at: {comment.created_at} <br />
+                votes: {comment.votes}
+              </li>
+            );
+          })}
+        </ul>
+        // <p>Comments: {this.state.comments}</p>
       );
     } else {
       return <p>Loading...</p>;
@@ -21,7 +31,7 @@ class ViewComments extends React.Component {
 
   componentDidMount() {
     axios
-      .get("https://nc-student-tracker.herokuapp.com/api/students/")
+      .get("https://kirsty-g-nc-news.herokuapp.com/api/articles")
       .then(({ data }) => {
         console.log(data);
         this.setState({
@@ -33,9 +43,21 @@ class ViewComments extends React.Component {
       });
   }
 
-  // componentDidUpdate(prevProps) {
-  //   console.log(this.props);
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.singleArticleData !== prevState.comments) {
+      axios
+        .get(
+          `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
+        )
+        .then(({ data }) => {
+          console.log(data, "data in ViewComments");
+          this.setState({ comments: data.comments });
+        })
+        .catch(err => {
+          console.log(err, "error in CDU");
+        });
+    }
+  }
 }
 
 export default ViewComments;

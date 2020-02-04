@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { Link } from "@reach/router";
+import ErrorPage from "../ErrorPage";
 
 class AllArticles extends React.Component {
   state = {
@@ -8,12 +9,15 @@ class AllArticles extends React.Component {
     isLoading: true,
     searchTerm: "",
     filterTerm: "",
+    err: null,
     user: "jessjelly"
   };
 
   render() {
-    const { articles, isLoading, searchTerm, filterTerm } = this.state;
-    if (isLoading) return <p>Loading...</p>;
+    const { articles, isLoading, searchTerm, err, filterTerm } = this.state;
+    if (err) {
+      return <ErrorPage err={err}></ErrorPage>;
+    } else if (isLoading) return <p>Loading...</p>;
     else
       return (
         <div>
@@ -28,9 +32,10 @@ class AllArticles extends React.Component {
           <form>
             Sort By:{" "}
             <label onClick={() => this.handleFilter({ filterTerm })}>
+              {" "}
+              {/* on click handlerFilter is invoked with the filterTerm (value)*/}
               <button value="created_at">Date</button>
               <button value="comment_id">Comment count</button>{" "}
-              {/* route is "students/:article_id/comments" */}
               <button value="votes">Votes</button>
             </label>
           </form>
@@ -51,6 +56,20 @@ class AllArticles extends React.Component {
       );
   }
 
+  componentDidMount() {
+    axios
+      .get("https://kirsty-g-nc-news.herokuapp.com/api/articles")
+      .then(({ data }) => {
+        this.setState({
+          articles: data.articles,
+          isLoading: false
+        });
+      })
+      .catch(err => {
+        this.setState({ err: err });
+      });
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.searchTerm !== prevState.searchTerm) {
       axios
@@ -63,20 +82,18 @@ class AllArticles extends React.Component {
           });
         });
     }
-  }
-
-  componentDidMount() {
-    axios
-      .get("https://kirsty-g-nc-news.herokuapp.com/api/articles")
-      .then(({ data }) => {
-        this.setState({
-          articles: data.articles,
-          isLoading: false
+    if (this.state.filterTerm !== prevState.filterTerm) {
+      axios
+        .get(
+          `https://kirsty-g-nc-news.herokuapp.com/api/articles?sort_by${this.state.filterTerm}`
+        )
+        .then(({ data }) => {
+          console.log(data, "DATAAAA");
+          this.setState({
+            articles: data.articles
+          });
         });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    }
   }
 
   handleClick = event => {
