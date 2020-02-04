@@ -31,11 +31,10 @@ class AllArticles extends React.Component {
           </form>
           <form>
             Sort By:{" "}
-            <label onClick={() => this.handleFilter({ filterTerm })}>
+            <label onClick={this.handleFilter}>
               {" "}
-              {/* on click handlerFilter is invoked with the filterTerm (value)*/}
               <button value="created_at">Date</button>
-              <button value="comment_id">Comment count</button>{" "}
+              <button value="comment_count">Comment count</button>
               <button value="votes">Votes</button>
             </label>
           </form>
@@ -45,6 +44,9 @@ class AllArticles extends React.Component {
                 <li key={article.article_id}>
                   title: {article.title} <br />
                   article: {article.body.slice(0, 100) + "..."}
+                  date: {article.created_at} <br />
+                  comment count: {article.comment_count} <br />
+                  votes: {article.votes}
                   <Link to={`/articles/${article.article_id}`}>
                     <button>--></button>
                   </Link>
@@ -85,7 +87,7 @@ class AllArticles extends React.Component {
     if (this.state.filterTerm !== prevState.filterTerm) {
       axios
         .get(
-          `https://kirsty-g-nc-news.herokuapp.com/api/articles?sort_by${this.state.filterTerm}`
+          `https://kirsty-g-nc-news.herokuapp.com/api/articles?sort_by=${this.state.filterTerm}`
         )
         .then(({ data }) => {
           console.log(data, "DATAAAA");

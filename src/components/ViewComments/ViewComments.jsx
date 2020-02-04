@@ -31,7 +31,9 @@ class ViewComments extends React.Component {
 
   componentDidMount() {
     axios
-      .get("https://kirsty-g-nc-news.herokuapp.com/api/articles")
+      .get(
+        `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
+      )
       .then(({ data }) => {
         console.log(data);
         this.setState({
@@ -43,21 +45,21 @@ class ViewComments extends React.Component {
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.singleArticleData !== prevState.comments) {
-      axios
-        .get(
-          `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
-        )
-        .then(({ data }) => {
-          console.log(data, "data in ViewComments");
-          this.setState({ comments: data.comments });
-        })
-        .catch(err => {
-          console.log(err, "error in CDU");
-        });
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.singleArticleData !== prevState.comments) {
+  //     axios
+  //       .get(
+  //         `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
+  //       )
+  //       .then(({ data }) => {
+  //         console.log(data, "data in ViewComments");
+  //         this.setState({ comments: data.comments });
+  //       })
+  //       .catch(err => {
+  //         console.log(err, "error in CDU");
+  //       });
+  //   }
+  // }
 }
 
 export default ViewComments;
