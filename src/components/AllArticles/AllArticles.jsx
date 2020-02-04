@@ -7,11 +7,12 @@ class AllArticles extends React.Component {
     articles: [],
     isLoading: true,
     searchTerm: "",
+    filterTerm: "",
     user: "jessjelly"
   };
 
   render() {
-    const { articles, isLoading, searchTerm } = this.state;
+    const { articles, isLoading, searchTerm, filterTerm } = this.state;
     if (isLoading) return <p>Loading...</p>;
     else
       return (
@@ -22,6 +23,15 @@ class AllArticles extends React.Component {
               <button value="cooking">Cooking</button>
               <button value="coding">Coding</button>
               <button value="football">Football</button>
+            </label>
+          </form>
+          <form>
+            Sort By:{" "}
+            <label onClick={() => this.handleFilter({ filterTerm })}>
+              <button value="created_at">Date</button>
+              <button value="comment_id">Comment count</button>{" "}
+              {/* route is "students/:article_id/comments" */}
+              <button value="votes">Votes</button>
             </label>
           </form>
           <ul>
@@ -72,6 +82,11 @@ class AllArticles extends React.Component {
   handleClick = event => {
     event.preventDefault();
     this.setState({ searchTerm: event.target.value });
+  };
+
+  handleFilter = event => {
+    event.preventDefault();
+    this.setState({ filterTerm: event.target.value });
   };
 }
 
