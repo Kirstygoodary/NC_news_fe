@@ -7,6 +7,7 @@ import AllArticles from "./components/AllArticles/AllArticles";
 import ArticlesById from "./components/ArticlesById/ArticlesById";
 import ViewComments from "./components/ViewComments/ViewComments";
 import { Router } from "@reach/router";
+import AddComment from "./components/AddComment/AddComment";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <AllArticles path="/articles" />
         <ArticlesById path="/articles/:id"></ArticlesById>
         <ViewComments path="/articles/:id/comments"></ViewComments>
+        {/* <AddComment path="/articles/:id/comments"></AddComment> */}
       </Router>
     </div>
   );
