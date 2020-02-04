@@ -10,7 +10,7 @@ class ViewComments extends React.Component {
 
   render() {
     const { comments, isLoading } = this.state;
-    if (isLoading) {
+    if (!isLoading) {
       return <p>Loading...</p>;
     } else {
       return (
@@ -37,23 +37,20 @@ class ViewComments extends React.Component {
   }
 
   componentDidMount() {
-    const { isLoading } = this.state;
-    if (isLoading) {
-      axios
-        .get(
-          `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
-        )
-        .then(({ data }) => {
-          console.log(data, "THIS IS THE DATA");
-          this.setState({
-            comments: data.comments,
-            isLoading: false
-          });
-        })
-        .catch(err => {
-          console.log(err, "error in CDU for ViewComments");
+    axios
+      .get(
+        `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
+      )
+      .then(({ data }) => {
+        console.log(data, "THIS IS THE DATA");
+        this.setState({
+          comments: data,
+          isLoading: false
         });
-    }
+      })
+      .catch(err => {
+        console.log(err, "error in CDU for ViewComments");
+      });
   }
 
   addItem = newComment => {
