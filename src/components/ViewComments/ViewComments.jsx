@@ -4,15 +4,13 @@ import AddComment from "../AddComment/AddComment";
 
 class ViewComments extends React.Component {
   state = {
-    comments: null,
+    comments: [],
     isLoading: true
   };
 
   render() {
     const { comments, isLoading } = this.state;
     if (!isLoading) {
-      return <p>Loading...</p>;
-    } else {
       return (
         <div>
           <form>
@@ -33,6 +31,8 @@ class ViewComments extends React.Component {
           <AddComment addItem={this.addItem} id={this.props.id} />
         </div>
       );
+    } else {
+      return <p>Loading...</p>;
     }
   }
 
@@ -44,7 +44,7 @@ class ViewComments extends React.Component {
       .then(({ data }) => {
         console.log(data, "THIS IS THE DATA");
         this.setState({
-          comments: data,
+          comments: data.comments,
           isLoading: false
         });
       })
