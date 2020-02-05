@@ -14,7 +14,7 @@ class ArticlesById extends React.Component {
     const { singleArticleData, isLoading } = this.state;
     if (isLoading) {
       return <p>Loading...</p>;
-    } else
+    } else {
       return (
         <div>
           <form>
@@ -33,8 +33,10 @@ class ArticlesById extends React.Component {
           >
             <button>View Comments</button>
           </Link> */}
+          <ViewComments id={this.state.singleArticleData.article_id} />
         </div>
       );
+    }
   }
 
   componentDidMount() {

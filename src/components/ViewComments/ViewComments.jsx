@@ -4,35 +4,44 @@ import AddComment from "../AddComment/AddComment";
 
 class ViewComments extends React.Component {
   state = {
-    comments: []
-    // isLoading: true
+    comments: [],
+    isLoading: true
   };
 
   render() {
     const { comments, isLoading } = this.state;
-    // if (isLoading === true) {
-    //   return <p>Loading...</p>;
-    // } else {
-    return (
-      <div>
-        <ul>
-          {comments.map(comment => {
-            return (
-              <li id="commentList" key={comment.comment_id}>
-                author: {comment.author} <br />
-                comment: {comment.body} <br />
-                created at: {comment.created_at} <br />
-                votes: {comment.votes} <br />
-                <button onClick={this.handleClick}>Delete Comment</button>
-              </li>
-            );
-          })}
-        </ul>
+    if (isLoading === true) {
+      return <p>Loading...</p>;
+    } else {
+      return (
+        <div>
+          <ul>
+            {comments.map(comment => {
+              return (
+                <li id="commentList" key={comment.comment_id}>
+                  author: {comment.author} <br />
+                  comment: {comment.body} <br />
+                  created at: {comment.created_at} <br />
+                  votes: {comment.votes} <br />
+                  <button
+                    value={comment.author}
+                    onClick={e => {
+                      console.log(e.target.value);
+                      this.handleClick(e.target.value, comment.comment_id);
+                    }}
+                  >
+                    Delete Comment
+                  </button>
+                  {console.log(this.props, "PROPS :)")}
+                </li>
+              );
+            })}
+          </ul>
 
-        <AddComment addItem={this.addItem} id={this.props.id} />
-      </div>
-    );
-    // }
+          <AddComment addItem={this.addItem} id={this.props.id} />
+        </div>
+      );
+    }
   }
 
   componentDidMount() {
@@ -64,9 +73,25 @@ class ViewComments extends React.Component {
     });
   };
 
-  handleClick = () => {
-    console.log(this.props.username, "CHECKING USERNAME");
-    if (this.props.username === this.state.comments.author) {
+  deleteComment(commentId) {
+    return axios
+      .delete(
+        `https://kirsty-g-nc-news.herokuapp.com/api/comments/${commentId}`
+      )
+      .then(() => {
+        this.getComments();
+      });
+  }
+
+  handleClick = (username, commentId) => {
+    console.log(this.state.comments, "CHECKING USERNAME");
+    console.log("Username:", username);
+    console.log("Comment ID:", commentId);
+
+    if (username === "jessjelly") {
+      this.deleteComment(commentId);
+    } else {
+      console.log("Username not jess");
     }
   };
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
 import ViewComments from "../ViewComments/ViewComments";
+import ArticlesById from "../ArticlesById/ArticlesById";
 
 class AllArticles extends React.Component {
   state = {
@@ -19,7 +20,7 @@ class AllArticles extends React.Component {
     if (err) {
       return <ErrorPage err={err}></ErrorPage>;
     } else if (isLoading) return <p>Loading...</p>;
-    else
+    else {
       return (
         <div>
           <form>
@@ -58,9 +59,9 @@ class AllArticles extends React.Component {
               );
             })}
           </ul>
-          <ViewComments id={this.props.id} />
         </div>
       );
+    }
   }
 
   componentDidMount() {

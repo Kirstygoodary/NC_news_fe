@@ -26,6 +26,7 @@ class AddComment extends React.Component {
         <label htmlFor="username">
           Comments:
           <input
+            required
             value={body}
             name={body}
             type="text"
