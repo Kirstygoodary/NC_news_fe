@@ -6,11 +6,15 @@ import AddComment from "../AddComment/AddComment";
 
 class ArticlesById extends React.Component {
   state = {
-    singleArticleData: null
+    singleArticleData: {},
+    isLoading: true
   };
 
   render() {
-    if (this.state.singleArticleData) {
+    const { singleArticleData, isLoading } = this.state;
+    if (isLoading) {
+      return <p>Loading...</p>;
+    } else
       return (
         <div>
           <form>
@@ -29,22 +33,19 @@ class ArticlesById extends React.Component {
           >
             <button>View Comments</button>
           </Link> */}
-          <ViewComments id={this.props.id} />
-          {/*<AddComment addItem={this.addItem} id={this.props.id} />*/}
         </div>
       );
-    } else {
-      return <p>Loading...</p>;
-    }
   }
 
   componentDidMount() {
     axios
-      .get("https://kirsty-g-nc-news.herokuapp.com/api/articles/")
+      .get(
+        `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}`
+      )
       .then(({ data }) => {
-        console.log(data);
         this.setState({
-          singleArticleData: data.articles
+          singleArticleData: data.article,
+          isLoading: false
         });
       })
       .catch(err => {
@@ -52,38 +53,38 @@ class ArticlesById extends React.Component {
       });
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.articles !== prevState.singleArticleData) {
-      axios
-        .get(
-          `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}`
-        )
-        .then(({ data }) => {
-          this.setState({ singleArticleData: data.article });
-        })
-        .catch(err => {
-          console.log(err, "error in CDU");
-        });
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (this.props.id !== prevState.singleArticleData) {
+  //     axios
+  //       .get(
+  //         `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}`
+  //       )
+  //       .then(({ data }) => {
+  //         this.setState({ singleArticleData: data.article });
+
+  //       })
+  //       .catch(err => {
+  //         console.log(err, "error in CDU");
+  //       });
+  //   }
+  // }
 
   // addItem = newComment => {
   //   this.setState(currentState => {
+  //     console.log(currentState.singleArticleData, "CURRENT STATE");
   //     return {
   //       singleArticleData: [newComment, ...currentState.singleArticleData]
-  //       //comments: [newComment, ...currentState.comments]
   //     };
   //   });
   // };
-  /**
-   * postAnItem = reqBody => {
-    return axios
-      .post("https://nc-student-tracker.herokuapp.com/api/students", reqBody)
-      .then(({ data }) => {
-        return data.student;
-      });
-  };
-   */
+
+  // postAnItem = reqBody => {
+  //   return axios
+  //     .post("https://nc-student-tracker.herokuapp.com/api/students", reqBody)
+  //     .then(({ data }) => {
+  //       return data.student;
+  //     });
+  // };
 }
 
 export default ArticlesById;

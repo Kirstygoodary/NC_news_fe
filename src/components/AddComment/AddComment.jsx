@@ -3,7 +3,7 @@ import axios from "axios";
 
 class AddComment extends React.Component {
   state = {
-    username: "Jessjelly",
+    username: "jessjelly",
     body: ""
   };
 
@@ -23,7 +23,7 @@ class AddComment extends React.Component {
             }
           />
         </label>
-        <label htmlFor="name">
+        <label htmlFor="username">
           Comments:
           <input
             value={body}
@@ -61,7 +61,7 @@ class AddComment extends React.Component {
         return data.comment;
       })
       .catch(err => {
-        console.log(err, "error in postComment");
+        console.dir(err, "error in postComment");
       });
   };
 }

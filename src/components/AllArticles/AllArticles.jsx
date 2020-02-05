@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
+import ViewComments from "../ViewComments/ViewComments";
 
 class AllArticles extends React.Component {
   state = {
@@ -47,13 +48,17 @@ class AllArticles extends React.Component {
                   date: {article.created_at} <br />
                   comment count: {article.comment_count} <br />
                   votes: {article.votes}
-                  <Link to={`/articles/${article.article_id}`}>
+                  <Link
+                    id={this.props.id}
+                    to={`/articles/${article.article_id}`}
+                  >
                     <button>--></button>
                   </Link>
                 </li>
               );
             })}
           </ul>
+          <ViewComments id={this.props.id} />
         </div>
       );
   }
