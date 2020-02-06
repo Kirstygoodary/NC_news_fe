@@ -5,10 +5,10 @@ const Navbar = () => {
   return (
     <nav>
       <Link to="/">
-        <button>Home</button>
+        <button className="filter-and_sort">Home</button>
       </Link>
       <Link to="/articles">
-        <button>Articles</button>
+        <button className="filter-and_sort">Articles</button>
       </Link>
     </nav>
   );

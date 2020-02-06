@@ -2,8 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
-import ViewComments from "../ViewComments/ViewComments";
-import ArticlesById from "../ArticlesById/ArticlesById";
+import "../AllArticles/AllArticles.css";
 
 class AllArticles extends React.Component {
   state = {
@@ -25,7 +24,7 @@ class AllArticles extends React.Component {
         <div>
           <form>
             Filter By:{" "}
-            <label onClick={this.handleClick}>
+            <label classname="filter_and_sort" onClick={this.handleClick}>
               <button value="cooking">Cooking</button>
               <button value="coding">Coding</button>
               <button value="football">Football</button>
@@ -33,7 +32,7 @@ class AllArticles extends React.Component {
           </form>
           <form>
             Sort By:{" "}
-            <label onClick={this.handleFilter}>
+            <label classname="filter_and_sort" onClick={this.handleFilter}>
               {" "}
               <button value="created_at">Date</button>
               <button value="comment_count">Comment count</button>
@@ -43,7 +42,7 @@ class AllArticles extends React.Component {
           <ul>
             {articles.map(article => {
               return (
-                <li key={article.article_id}>
+                <li className="articles" key={article.article_id}>
                   title: {article.title} <br />
                   article: {article.body.slice(0, 100) + "..."}
                   date: {article.created_at} <br />
