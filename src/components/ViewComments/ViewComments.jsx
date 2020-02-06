@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import axios from "axios";
 import AddComment from "../AddComment/AddComment";
+import CommentVoteChanger from "../CommentVoteChanger/CommentVoteChanger";
 
 class ViewComments extends React.Component {
   state = {
@@ -32,7 +33,12 @@ class ViewComments extends React.Component {
                   >
                     Delete Comment
                   </button>
-                  {console.log(this.props, "PROPS :)")}
+                  <>
+                    <CommentVoteChanger
+                      votes={comment.votes}
+                      id={comment.comment_id}
+                    />{" "}
+                  </>
                 </li>
               );
             })}
@@ -54,7 +60,6 @@ class ViewComments extends React.Component {
         `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
       )
       .then(({ data }) => {
-        console.log(data.comments, "THIS IS THE DATA");
         this.setState({
           comments: data.comments,
           isLoading: false
