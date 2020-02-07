@@ -7,11 +7,13 @@ import { Link } from "@reach/router";
 class ArticlesById extends React.Component {
   state = {
     singleArticleData: {},
-    isLoading: true
+    isLoading: true,
+    err: null
   };
 
   render() {
     const { singleArticleData, isLoading } = this.state;
+
     if (isLoading) {
       return <p>Loading...</p>;
     } else {
@@ -27,15 +29,6 @@ class ArticlesById extends React.Component {
             votes={this.state.singleArticleData.votes}
             id={this.state.singleArticleData.article_id}
           />
-          {/* <button onClick={() => this.handleClick(1)}>Vote up</button>
-            <button onClick={() => this.handleClick(-1)}>Vote down</button> */}
-
-          {/* <Link
-            // props={this.props}
-            to={`/articles/${this.state.singleArticleData.article_id}/comments`}
-          >
-            <button>View Comments</button>
-          </Link> */}
 
           <ViewComments id={this.state.singleArticleData.article_id} />
         </div>

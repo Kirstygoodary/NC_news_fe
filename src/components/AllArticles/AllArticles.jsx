@@ -40,23 +40,36 @@ class AllArticles extends React.Component {
             </label>
           </form>
           <ul>
-            {articles.map(article => {
-              return (
-                <li className="articles" key={article.article_id}>
-                  title: {article.title} <br />
-                  article: {article.body.slice(0, 100) + "..."}
-                  date: {article.created_at} <br />
-                  comment count: {article.comment_count} <br />
-                  votes: {article.votes}
-                  <Link
-                    id={this.props.id}
-                    to={`/articles/${article.article_id}`}
-                  >
-                    <button>--></button>
-                  </Link>
-                </li>
-              );
-            })}
+            <div class="container grid-wrapper">
+              {articles.map(article => {
+                return (
+                  <div class="box zone">
+                    <li
+                      className="Header"
+                      className="articles"
+                      key={article.article_id}
+                    >
+                      <panel className="title">
+                        <strong>{article.title}</strong>
+                      </panel>
+                      <br />
+                      <panel className="articlebody">
+                        <em>{article.body.slice(0, 100) + "..."}</em>
+                        date: {article.created_at} <br />
+                        comment count: {article.comment_count} <br />
+                        votes: {article.votes}
+                      </panel>
+                      <Link
+                        id={this.props.id}
+                        to={`/articles/${article.article_id}`}
+                      >
+                        <button>--></button>
+                      </Link>
+                    </li>
+                  </div>
+                );
+              })}
+            </div>
           </ul>
         </div>
       );

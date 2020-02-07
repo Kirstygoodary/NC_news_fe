@@ -3,12 +3,12 @@ import { Link } from "@reach/router";
 
 const Navbar = () => {
   return (
-    <nav>
-      <Link to="/">
-        <button className="filter-and_sort">Home</button>
+    <nav class="nav">
+      <Link to="/" className="navnav">
+        Home
       </Link>
-      <Link to="/articles">
-        <button className="filter-and_sort">Articles</button>
+      <Link to="/articles" className="navnav">
+        Articles
       </Link>
     </nav>
   );

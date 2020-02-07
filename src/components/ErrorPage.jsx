@@ -1,11 +1,8 @@
 import React from "react";
 
 const ErrorPage = ({ err }) => {
-  return (
-    <p>
-      Oops, {err.data.msg} , {err.status}
-    </p>
-  );
+  console.log(JSON.stringify(err));
+  return <p>Oops, {err.message}</p>;
 };
 
 // add isLoading toggle
