@@ -23,9 +23,7 @@ class App extends React.Component {
           <Home path="/" />
           <AllArticles path="/articles" />
           <ArticlesById path="/articles/:id" />
-          {/* <AddComment path="/articles/:id/comments"></AddComment> */}
         </Router>
-        {/*<AllArticles username={this.state.username} />*/}
       </div>
     );
   }

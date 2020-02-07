@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import * as api from "../API/api";
+
 import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
 import "../AllArticles/AllArticles.css";
@@ -10,21 +12,21 @@ class AllArticles extends React.Component {
     isLoading: true,
     searchTerm: "",
     filterTerm: "",
-    err: null,
+    error: null,
     user: "jessjelly"
   };
 
   render() {
-    const { articles, isLoading, searchTerm, err, filterTerm } = this.state;
-    if (err) {
-      return <ErrorPage err={err}></ErrorPage>;
+    const { articles, isLoading, searchTerm, error, filterTerm } = this.state;
+    if (error) {
+      return <ErrorPage err={error}></ErrorPage>;
     } else if (isLoading) return <p>Loading...</p>;
     else {
       return (
         <div>
           <form>
             Filter By:{" "}
-            <label classname="filter_and_sort" onClick={this.handleClick}>
+            <label className="filter_and_sort" onClick={this.handleClick}>
               <button value="cooking">Cooking</button>
               <button value="coding">Coding</button>
               <button value="football">Football</button>
@@ -32,7 +34,7 @@ class AllArticles extends React.Component {
           </form>
           <form>
             Sort By:{" "}
-            <label classname="filter_and_sort" onClick={this.handleFilter}>
+            <label className="filter_and_sort" onClick={this.handleFilter}>
               {" "}
               <button value="created_at">Date</button>
               <button value="comment_count">Comment count</button>
@@ -76,22 +78,17 @@ class AllArticles extends React.Component {
     }
   }
 
-  componentDidMount() {
-    axios
-      .get("https://kirsty-g-nc-news.herokuapp.com/api/articles")
-      .then(({ data }) => {
-        this.setState({
-          articles: data.articles,
-          isLoading: false
-        });
-      })
-      .catch(err => {
-        this.setState({ err: err });
-      });
-  }
+  componentDidMount = () => {
+    this.fetchArticles();
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.searchTerm !== prevState.searchTerm) {
+      // this.fetchArticles()
+      //   // = () => {
+      //   //   api
+      //   //     .getArticles(topic, sort_by, order_by)
+
       axios
         .get(
           `https://kirsty-g-nc-news.herokuapp.com/api/articles?topic=${this.state.searchTerm}`
@@ -100,21 +97,41 @@ class AllArticles extends React.Component {
           this.setState({
             articles: data.articles
           });
+        })
+        .catch(err => {
+          this.setState({ error: err });
         });
     }
+
     if (this.state.filterTerm !== prevState.filterTerm) {
       axios
         .get(
           `https://kirsty-g-nc-news.herokuapp.com/api/articles?sort_by=${this.state.filterTerm}`
         )
         .then(({ data }) => {
-          console.log(data, "DATAAAA");
           this.setState({
             articles: data.articles
           });
+        })
+        .catch(err => {
+          this.setState({ error: err });
         });
     }
   }
+
+  fetchArticles = () => {
+    api
+      .getArticles(this.searchTerm, this.filterTerm)
+      .then(articles => {
+        this.setState({
+          articles: articles,
+          isLoading: false
+        });
+      })
+      .catch(err => {
+        this.setState({ error: err });
+      });
+  };
 
   handleClick = event => {
     event.preventDefault();
