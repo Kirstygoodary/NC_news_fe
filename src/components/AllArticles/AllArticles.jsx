@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import * as api from "../API/api";
-
 import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
 import "../AllArticles/AllArticles.css";
@@ -81,7 +80,7 @@ class AllArticles extends React.Component {
       // this.fetchArticles()
       //   // = () => {
       //   //   api
-      //   //     .getArticles(topic, sort_by, order_by)
+      //   //     .getArticles(searchTerm, filterTerm)
 
       axios
         .get(

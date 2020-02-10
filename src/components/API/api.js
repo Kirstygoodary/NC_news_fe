@@ -2,12 +2,6 @@ import axios from "axios";
 
 const baseURL = "https://kirsty-g-nc-news.herokuapp.com/api";
 
-export const getTopics = () => {
-  return axios.get(`${baseURL}/topics`).then(({ data }) => {
-    return data.topics;
-  });
-};
-
 export const getArticles = (filterTerm, searchTerm) => {
   return axios
     .get(`${baseURL}/articles`, {
@@ -38,4 +32,4 @@ export const getGames = genre, sort_by, order_by => {
     .then(...) => {
           return data.games }
  */
-export default getTopics;
+export default getArticles;

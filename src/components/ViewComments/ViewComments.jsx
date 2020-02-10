@@ -82,21 +82,26 @@ class ViewComments extends React.Component {
     });
   };
 
-  deleteComment(commentId) {
-    return axios
-      .delete(
-        `https://kirsty-g-nc-news.herokuapp.com/api/comments/${commentId}`
-      )
-      .then(() => {
-        this.getComments();
-      });
+  // deleteComment(commentId) {
+  //   return axios
+  //     .delete(
+  //       `https://kirsty-g-nc-news.herokuapp.com/api/comments/${commentId}`
+  //     )
+  //     .then(() => {
+  //       this.getComments();
+  //     });
+  // }
+
+  deleteComment(commentID) {
+    let commentsArray = this.state.comments.filter(function(comment) {
+      return comment.comment_id !== commentID;
+    });
+    this.setState({
+      comments: commentsArray
+    });
   }
 
   handleClick = (username, commentId) => {
-    console.log(this.state.comments, "CHECKING USERNAME");
-    console.log("Username:", username);
-    console.log("Comment ID:", commentId);
-
     if (username === "jessjelly") {
       this.deleteComment(commentId);
     } else {
