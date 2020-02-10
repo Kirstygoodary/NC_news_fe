@@ -5,6 +5,7 @@ import * as api from "../API/api";
 import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
 import "../AllArticles/AllArticles.css";
+import ArticlesById from "../ArticlesById/ArticlesById";
 
 class AllArticles extends React.Component {
   state = {
@@ -12,12 +13,11 @@ class AllArticles extends React.Component {
     isLoading: true,
     searchTerm: "",
     filterTerm: "",
-    error: null,
-    user: "jessjelly"
+    error: null
   };
 
   render() {
-    const { articles, isLoading, searchTerm, error, filterTerm } = this.state;
+    const { articles, isLoading, error } = this.state;
     if (error) {
       return <ErrorPage err={error}></ErrorPage>;
     } else if (isLoading) return <p>Loading...</p>;
@@ -42,29 +42,22 @@ class AllArticles extends React.Component {
             </label>
           </form>
           <ul>
-            <div class="container grid-wrapper">
+            <div className="container grid-wrapper">
               {articles.map(article => {
                 return (
-                  <div class="box zone">
-                    <li
-                      className="Header"
-                      className="articles"
-                      key={article.article_id}
-                    >
-                      <panel className="title">
+                  <div className="box zone" key={article.article_id}>
+                    <li className="Header" className="articles">
+                      <div className="title">
                         <strong>{article.title}</strong>
-                      </panel>
+                      </div>
                       <br />
-                      <panel className="articlebody">
+                      <div className="articlebody">
                         <em>{article.body.slice(0, 100) + "..."}</em>
                         date: {article.created_at} <br />
                         comment count: {article.comment_count} <br />
                         votes: {article.votes}
-                      </panel>
-                      <Link
-                        id={this.props.id}
-                        to={`/articles/${article.article_id}`}
-                      >
+                      </div>
+                      <Link to={`/articles/${article.article_id}`}>
                         <button>--></button>
                       </Link>
                     </li>
@@ -73,6 +66,7 @@ class AllArticles extends React.Component {
               })}
             </div>
           </ul>
+          <ArticlesById username={this.props.username} />
         </div>
       );
     }

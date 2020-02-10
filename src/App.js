@@ -6,8 +6,8 @@ import Home from "./components/Home/Home";
 import AllArticles from "./components/AllArticles/AllArticles";
 import ArticlesById from "./components/ArticlesById/ArticlesById";
 import ViewComments from "./components/ViewComments/ViewComments";
+
 import { Router } from "@reach/router";
-import AddComment from "./components/AddComment/AddComment";
 
 class App extends React.Component {
   state = {
@@ -21,8 +21,9 @@ class App extends React.Component {
         <Navbar />
         <Router>
           <Home path="/" />
-          <AllArticles path="/articles" />
-          <ArticlesById path="/articles/:id" />
+          <AllArticles username={this.state.username} path="/articles" />
+          <ArticlesById path="/articles/:id" username={this.state.username} />
+          <ViewComments path="/articles/:id/comments" />
         </Router>
       </div>
     );

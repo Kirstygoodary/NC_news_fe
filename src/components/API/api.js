@@ -8,12 +8,12 @@ export const getTopics = () => {
   });
 };
 
-export const getArticles = (topic, sort_by) => {
+export const getArticles = (filterTerm, searchTerm) => {
   return axios
     .get(`${baseURL}/articles`, {
       params: {
-        topic: topic,
-        sort_by: sort_by
+        filterTerm: filterTerm,
+        searchTerm: searchTerm
       }
     })
     .then(({ data }) => {

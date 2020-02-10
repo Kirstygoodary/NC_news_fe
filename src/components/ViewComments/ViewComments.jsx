@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import axios from "axios";
 import AddComment from "../AddComment/AddComment";
 import CommentVoteChanger from "../CommentVoteChanger/CommentVoteChanger";
@@ -44,7 +44,11 @@ class ViewComments extends React.Component {
             })}
           </ul>
 
-          <AddComment addItem={this.addItem} id={this.props.id} />
+          <AddComment
+            addItem={this.addItem}
+            id={this.props.id}
+            username={this.props.username}
+          />
         </div>
       );
     }
@@ -102,19 +106,3 @@ class ViewComments extends React.Component {
 }
 
 export default ViewComments;
-
-// componentDidUpdate(prevProps, prevState) {
-//   if (this.props.singleArticleData !== prevState.comments) {
-//     axios
-//       .get(
-//         `https://kirsty-g-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`
-//       )
-//       .then(({ data }) => {
-//         console.log(data, "data in ViewComments");
-//         this.setState({ comments: data.comments });
-//       })
-//       .catch(err => {
-//         console.log(err, "error in CDU");
-//       });
-//   }
-// }

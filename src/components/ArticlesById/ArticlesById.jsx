@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import ViewComments from "../ViewComments/ViewComments";
 import VoteChanger from "../VoteChanger/VoteChanger";
-import { Link } from "@reach/router";
+import AddComment from "../AddComment/AddComment";
 
 class ArticlesById extends React.Component {
   state = {
@@ -12,7 +12,7 @@ class ArticlesById extends React.Component {
   };
 
   render() {
-    const { singleArticleData, isLoading } = this.state;
+    const { isLoading } = this.state;
 
     if (isLoading) {
       return <p>Loading...</p>;
@@ -29,8 +29,12 @@ class ArticlesById extends React.Component {
             votes={this.state.singleArticleData.votes}
             id={this.state.singleArticleData.article_id}
           />
-
-          <ViewComments id={this.state.singleArticleData.article_id} />
+          <ViewComments
+            username={this.props.username}
+            id={this.state.singleArticleData.article_id}
+          />
+          {/*<AddComment id={this.state.singleArticleData.article_id} />*/}
+          {/*<AddComment username={this.props.username}*/}
         </div>
       );
     }
