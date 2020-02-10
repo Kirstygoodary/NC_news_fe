@@ -25,19 +25,35 @@ class AllArticles extends React.Component {
         <div>
           <form>
             Filter By:{" "}
-            <label className="filter_and_sort" onClick={this.handleClick}>
-              <button value="cooking">Cooking</button>
-              <button value="coding">Coding</button>
-              <button value="football">Football</button>
+            <label>
+              <button value="cooking" onClick={this.handleClick}>
+                Cooking
+              </button>
+              <br />
+              <button value="coding" onClick={this.handleClick}>
+                Coding
+              </button>
+              <br />
+              <button value="football" onClick={this.handleClick}>
+                Football
+              </button>
             </label>
           </form>
           <form>
             Sort By:{" "}
-            <label className="filter_and_sort" onClick={this.handleFilter}>
+            <label className="filter_and_sort">
               {" "}
-              <button value="created_at">Date</button>
-              <button value="comment_count">Comment count</button>
-              <button value="votes">Votes</button>
+              <button value="created_at" onClick={this.handleFilter}>
+                Date
+              </button>
+              <br />
+              <button value="comment_count" onClick={this.handleFilter}>
+                Comment count
+              </button>
+              <br />
+              <button value="votes" onClick={this.handleFilter}>
+                Votes
+              </button>
             </label>
           </form>
           <ul>
@@ -51,7 +67,7 @@ class AllArticles extends React.Component {
                       </div>
                       <br />
                       <div className="articlebody">
-                        <em>{article.body.slice(0, 100) + "..."}</em>
+                        <em>{article.body.slice(0, 100) + "..."}</em> <br />
                         date: {article.created_at} <br />
                         comment count: {article.comment_count} <br />
                         votes: {article.votes}
@@ -76,43 +92,42 @@ class AllArticles extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.searchTerm !== prevState.searchTerm) {
-      // this.fetchArticles()
-      //   // = () => {
-      //   //   api
-      //   //     .getArticles(searchTerm, filterTerm)
+    const { searchTerm, filterTerm } = this.state;
+    if (searchTerm !== prevState.searchTerm) {
+      this.fetchArticles();
 
-      axios
-        .get(
-          `https://kirsty-g-nc-news.herokuapp.com/api/articles?topic=${this.state.searchTerm}`
-        )
-        .then(({ data }) => {
-          this.setState({
-            articles: data.articles
-          });
-        })
-        .catch(err => {
-          this.setState({ error: err });
-        });
-    }
+      // axios
+      //   .get(
+      //     `https://kirsty-g-nc-news.herokuapp.com/api/articles?topic=${searchTerm}`
+      //   )
+      //   .then(({ data }) => {
+      //     this.setState({
+      //       articles: data.articles
+      //     });
+      //   })
+      //   .catch(err => {
+      //     this.setState({ error: err });
+      //   });
+    } else if (filterTerm !== prevState.filterTerm) {
+      this.fetchArticles();
 
-    if (this.state.filterTerm !== prevState.filterTerm) {
-      axios
-        .get(
-          `https://kirsty-g-nc-news.herokuapp.com/api/articles?sort_by=${this.state.filterTerm}`
-        )
-        .then(({ data }) => {
-          this.setState({
-            articles: data.articles
-          });
-        })
-        .catch(err => {
-          this.setState({ error: err });
-        });
+      // axios
+      //   .get(
+      //     `https://kirsty-g-nc-news.herokuapp.com/api/articles?sort_by=${filterTerm}`
+      //   )
+      //   .then(({ data }) => {
+      //     this.setState({
+      //       articles: data.articles
+      //     });
+      //   })
+      //   .catch(err => {
+      //     this.setState({ error: err });
+      //   });
     }
   }
 
   fetchArticles = () => {
+    const { searchTerm, filterTerm } = this.state;
     api
       .getArticles(this.searchTerm, this.filterTerm)
       .then(articles => {
@@ -122,6 +137,7 @@ class AllArticles extends React.Component {
         });
       })
       .catch(err => {
+        console.log(err, "error");
         this.setState({ error: err });
       });
   };

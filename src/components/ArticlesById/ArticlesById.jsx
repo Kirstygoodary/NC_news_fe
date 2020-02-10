@@ -12,7 +12,7 @@ class ArticlesById extends React.Component {
   };
 
   render() {
-    const { isLoading } = this.state;
+    const { singleArticleData, isLoading } = this.state;
 
     if (isLoading) {
       return <p>Loading...</p>;
@@ -20,21 +20,19 @@ class ArticlesById extends React.Component {
       return (
         <div>
           <p>
-            title: {this.state.singleArticleData.title} <br />
-            author: {this.state.singleArticleData.author} <br />
-            topic: {this.state.singleArticleData.topic} <br />
-            article: {this.state.singleArticleData.body} <br />
+            title: {singleArticleData.title} <br />
+            author: {singleArticleData.author} <br />
+            topic: {singleArticleData.topic} <br />
+            article: {singleArticleData.body} <br />
           </p>
           <VoteChanger
-            votes={this.state.singleArticleData.votes}
-            id={this.state.singleArticleData.article_id}
+            votes={singleArticleData.votes}
+            id={singleArticleData.article_id}
           />
           <ViewComments
             username={this.props.username}
-            id={this.state.singleArticleData.article_id}
+            id={singleArticleData.article_id}
           />
-          {/*<AddComment id={this.state.singleArticleData.article_id} />*/}
-          {/*<AddComment username={this.props.username}*/}
         </div>
       );
     }

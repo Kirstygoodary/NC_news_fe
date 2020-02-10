@@ -10,12 +10,18 @@ class ViewComments extends React.Component {
   };
 
   render() {
+    console.log(this.props, "props in view comments");
     const { comments, isLoading } = this.state;
     if (isLoading === true) {
       return <p>Loading...</p>;
     } else {
       return (
         <div>
+          <AddComment
+            addItem={this.addItem}
+            id={this.props.id}
+            username={this.props.username}
+          />
           <ul>
             {comments.map(comment => {
               return (
@@ -43,12 +49,6 @@ class ViewComments extends React.Component {
               );
             })}
           </ul>
-
-          <AddComment
-            addItem={this.addItem}
-            id={this.props.id}
-            username={this.props.username}
-          />
         </div>
       );
     }

@@ -2,12 +2,12 @@ import axios from "axios";
 
 const baseURL = "https://kirsty-g-nc-news.herokuapp.com/api";
 
-export const getArticles = (filterTerm, searchTerm) => {
+export const getArticles = (searchTerm, filterTerm) => {
   return axios
     .get(`${baseURL}/articles`, {
       params: {
-        filterTerm: filterTerm,
-        searchTerm: searchTerm
+        topic: searchTerm,
+        sort_by: filterTerm
       }
     })
     .then(({ data }) => {

@@ -3,20 +3,20 @@ import axios from "axios";
 
 class AddComment extends React.Component {
   state = {
-    username: this.props.username,
+    username: "",
     body: ""
   };
 
   render() {
-    const { username, body } = this.state;
+    const { body } = this.state;
 
     return (
       <form onSubmit={this.handleSubmit}>
         <label htmlFor="username">
           Username:
           <input
-            value={username}
-            name={username}
+            value={this.props.username}
+            name={this.props.username}
             required
             type="text"
             onChange={event =>
@@ -45,7 +45,8 @@ class AddComment extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { username, body } = this.state;
+    const { body } = this.state;
+    const { username } = this.props;
 
     this.postComment({ username, body }).then(newComment => {
       this.props.addItem(newComment);

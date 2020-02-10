@@ -15,14 +15,15 @@ class App extends React.Component {
   };
 
   render() {
+    const { username } = this.state;
     return (
       <div className="App">
-        <Header />
+        <Header username={username} />
         <Navbar />
         <Router>
           <Home path="/" />
-          <AllArticles username={this.state.username} path="/articles" />
-          <ArticlesById path="/articles/:id" username={this.state.username} />
+          <AllArticles username={username} path="/articles" />
+          <ArticlesById path="/articles/:id" username={username} />
           <ViewComments path="/articles/:id/comments" />
         </Router>
       </div>
