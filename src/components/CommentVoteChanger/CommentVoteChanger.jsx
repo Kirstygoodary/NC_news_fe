@@ -29,16 +29,22 @@ class CommentVoteChanger extends React.Component {
   }
 
   handleClick = voteDifference => {
-    axios.patch(
-      `https://kirsty-g-nc-news.herokuapp.com/api/comments/${this.props.id}`,
-      { inc_votes: voteDifference }
-    );
-    this.setState(prevState => {
-      return {
-        commentVote: prevState.commentVote + voteDifference,
-        disabledButton: true
-      };
-    });
+    axios
+      .patch(
+        `https://kirsty-g-nc-news.herokuapp.com/api/comments/${this.props.id}`,
+        { inc_votes: voteDifference }
+      )
+      .then(() => {
+        this.setState(prevState => {
+          return {
+            commentVote: prevState.commentVote + voteDifference,
+            disabledButton: true
+          };
+        });
+      })
+      .catch(err => {
+        console.log(err, "error in patch req for comment votes");
+      });
     // .then(() => {
     //   this.setState(currentState => {
     //     return {

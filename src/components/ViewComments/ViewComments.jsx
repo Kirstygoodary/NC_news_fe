@@ -6,12 +6,12 @@ import CommentVoteChanger from "../CommentVoteChanger/CommentVoteChanger";
 class ViewComments extends React.Component {
   state = {
     comments: [],
-    isLoading: true
+    isLoading: true,
+    displayDeleteButton: false
   };
 
   render() {
-    console.log(this.props, "props in view comments");
-    const { comments, isLoading } = this.state;
+    const { comments, isLoading, displayDeleteButton } = this.state;
     if (isLoading === true) {
       return <p>Loading...</p>;
     } else {
@@ -31,6 +31,9 @@ class ViewComments extends React.Component {
                   created at: {comment.created_at} <br />
                   votes: {comment.votes} <br />
                   <button
+                    className={
+                      displayDeleteButton ? "displayDeleteButton" : null
+                    }
                     value={comment.author}
                     onClick={e => {
                       console.log(e.target.value);
@@ -92,14 +95,49 @@ class ViewComments extends React.Component {
   //     });
   // }
 
-  deleteComment(commentID) {
-    let commentsArray = this.state.comments.filter(function(comment) {
-      return comment.comment_id !== commentID;
-    });
-    this.setState({
-      comments: commentsArray
-    });
-  }
+  deleteComment = commentId => {
+    axios
+      .delete(
+        `https://kirsty-g-nc-news.herokuapp.com/api/comments/${commentId}`
+      )
+      .then(() => {
+        if (this.state.author === this.props.username) {
+          this.setState(currentState => {
+            let commentsArray = currentState.comments.filter(function(comment) {
+              return comment.comment_id !== commentId;
+            });
+            return {
+              comments: commentsArray,
+              displayDeleteButton: true
+            };
+          });
+        }
+      });
+    // this.setState(currentState => {
+    //   let commentsArray = currentState.comments.filter(function(comment) {
+    //     return comment.comment_id !== commentId;
+    //   });
+    //   if (currentState.comments.author === this.props.username) {
+    //     return {
+    //       comments: commentsArray,
+    //       displayDeleteButton: true
+    //     };
+    //   } else
+    //     return {
+    //       comments: commentsArray,
+    //       displayDeleteButton: false
+    //     };
+    // }).catch(err => {
+    //   console.log(err);
+    // });
+
+    //}
+    //   let commentsArray = this.state.comments.filter(function(comment) {
+    //     return comment.comment_id !== commentID;
+
+    //   });
+    // });
+  };
 
   handleClick = (username, commentId) => {
     if (username === "jessjelly") {

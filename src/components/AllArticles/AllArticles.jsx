@@ -5,6 +5,8 @@ import { Link } from "@reach/router";
 import ErrorPage from "../ErrorPage";
 import "../AllArticles/AllArticles.css";
 import ArticlesById from "../ArticlesById/ArticlesById";
+import SortAndFilter from "../SortAndFilter/SortAndFilter";
+import ArticleCards from "../ArticleCards/ArticleCards";
 
 class AllArticles extends React.Component {
   state = {
@@ -23,7 +25,12 @@ class AllArticles extends React.Component {
     else {
       return (
         <div>
-          <form>
+          <SortAndFilter
+            handleClick={this.handleClick}
+            handleFilter={this.handleFilter}
+          />
+          <ArticleCards articles={this.state.articles} />
+          {/*<form>
             Filter By:{" "}
             <label>
               <button value="cooking" onClick={this.handleClick}>
@@ -55,8 +62,9 @@ class AllArticles extends React.Component {
                 Votes
               </button>
             </label>
-          </form>
-          <ul>
+        </form>*/}
+
+          {/*<ul className="container grid-wrapper">
             <div className="container grid-wrapper">
               {articles.map(article => {
                 return (
@@ -80,7 +88,8 @@ class AllArticles extends React.Component {
                 );
               })}
             </div>
-          </ul>
+            </ul>*/}
+
           <ArticlesById username={this.props.username} />
         </div>
       );

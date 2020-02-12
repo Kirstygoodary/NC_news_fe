@@ -127,3 +127,7 @@ li {
   font-family: "Poppins", sans-serif;
   color: #2d2d2a;
 }
+
+.displayDeleteButton {
+  visibility: hidden;
+}

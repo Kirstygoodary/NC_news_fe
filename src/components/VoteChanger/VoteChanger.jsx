@@ -39,6 +39,8 @@ class VoteChanger extends React.Component {
         voteChange: prevState.voteChange + voteDifference,
         disabledButton: true
       };
+    }).catch(err => {
+      console.log(err);
     });
     // .then(() => {
     //   this.setState(currentState => {
