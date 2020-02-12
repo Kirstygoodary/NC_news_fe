@@ -6,12 +6,11 @@ import CommentVoteChanger from "../CommentVoteChanger/CommentVoteChanger";
 class ViewComments extends React.Component {
   state = {
     comments: [],
-    isLoading: true,
-    displayDeleteButton: false
+    isLoading: true
   };
 
   render() {
-    const { comments, isLoading, displayDeleteButton } = this.state;
+    const { comments, isLoading } = this.state;
     if (isLoading === true) {
       return <p>Loading...</p>;
     } else {
@@ -32,7 +31,9 @@ class ViewComments extends React.Component {
                   votes: {comment.votes} <br />
                   <button
                     className={
-                      displayDeleteButton ? "displayDeleteButton" : null
+                      comment.author === this.props.username
+                        ? "displayDeleteButton"
+                        : "dontDisplayDeleteButton"
                     }
                     value={comment.author}
                     onClick={e => {
@@ -101,17 +102,14 @@ class ViewComments extends React.Component {
         `https://kirsty-g-nc-news.herokuapp.com/api/comments/${commentId}`
       )
       .then(() => {
-        if (this.state.author === this.props.username) {
-          this.setState(currentState => {
-            let commentsArray = currentState.comments.filter(function(comment) {
-              return comment.comment_id !== commentId;
-            });
-            return {
-              comments: commentsArray,
-              displayDeleteButton: true
-            };
+        this.setState(currentState => {
+          let commentsArray = currentState.comments.filter(function(comment) {
+            return comment.comment_id !== commentId;
           });
-        }
+          return {
+            comments: commentsArray
+          };
+        });
       });
     // this.setState(currentState => {
     //   let commentsArray = currentState.comments.filter(function(comment) {
@@ -140,11 +138,11 @@ class ViewComments extends React.Component {
   };
 
   handleClick = (username, commentId) => {
-    if (username === "jessjelly") {
-      this.deleteComment(commentId);
-    } else {
-      console.log("Username not jess");
-    }
+    // if (username === "jessjelly") {
+    this.deleteComment(commentId);
+    // } else {
+    //   console.log("Username not jess");
+    // }
   };
 }
 

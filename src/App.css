@@ -129,5 +129,9 @@ li {
 }
 
 .displayDeleteButton {
+  visibility: visible;
+}
+
+.dontDisplayDeleteButton {
   visibility: hidden;
 }

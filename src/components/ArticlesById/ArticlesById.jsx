@@ -2,7 +2,6 @@ import React from "react";
 import axios from "axios";
 import ViewComments from "../ViewComments/ViewComments";
 import VoteChanger from "../VoteChanger/VoteChanger";
-import AddComment from "../AddComment/AddComment";
 
 class ArticlesById extends React.Component {
   state = {

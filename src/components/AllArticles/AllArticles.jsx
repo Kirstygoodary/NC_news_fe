@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "axios";
+
 import * as api from "../API/api";
-import { Link } from "@reach/router";
+
 import ErrorPage from "../ErrorPage";
 import "../AllArticles/AllArticles.css";
 import ArticlesById from "../ArticlesById/ArticlesById";
@@ -18,7 +18,7 @@ class AllArticles extends React.Component {
   };
 
   render() {
-    const { articles, isLoading, error } = this.state;
+    const { isLoading, error } = this.state;
     if (error) {
       return <ErrorPage err={error}></ErrorPage>;
     } else if (isLoading) return <p>Loading...</p>;
