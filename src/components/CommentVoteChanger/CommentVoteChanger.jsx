@@ -1,31 +1,38 @@
 import React from "react";
 import axios from "axios";
+import ErrorPage from "../ErrorPage";
 
 class CommentVoteChanger extends React.Component {
   state = {
     commentVote: 0,
-    disabledButton: false
+    disabledButton: false,
+    error: null
   };
 
   render() {
-    const { commentVote, disabledButton } = this.state;
-    return (
-      <section>
-        <button
-          disabled={disabledButton === true}
-          onClick={() => this.handleClick(1)}
-        >
-          Vote up
-        </button>
-        <p> Votes: {this.props.votes + commentVote} </p>
-        <button
-          disabled={disabledButton === true}
-          onClick={() => this.handleClick(-1)}
-        >
-          Vote down
-        </button>
-      </section>
-    );
+    const { commentVote, disabledButton, error } = this.state;
+    if (error) {
+      return <ErrorPage err={error}></ErrorPage>;
+    } else {
+      return (
+        <section>
+          <button
+            disabled={disabledButton === true}
+            onClick={() => this.handleClick(-1)}
+          >
+            -
+          </button>
+          &nbsp; Votes: {this.props.votes + commentVote} &nbsp;
+          <button
+            disabled={disabledButton === true}
+            onClick={() => this.handleClick(1)}
+          >
+            +
+          </button>
+          <p></p>
+        </section>
+      );
+    }
   }
 
   handleClick = voteDifference => {
@@ -43,19 +50,8 @@ class CommentVoteChanger extends React.Component {
         });
       })
       .catch(err => {
-        console.log(err, "error in patch req for comment votes");
+        this.setState({ error: err });
       });
-    // .then(() => {
-    //   this.setState(currentState => {
-    //     return {
-    //       commentVote: currentState.commentVote + voteDifference,
-    //       disabledButton: true
-    //     };
-    //   });
-    // })
-    // .catch(err => {
-    //   console.log(err, "error in patch req for comment votes");
-    // });
   };
 }
 

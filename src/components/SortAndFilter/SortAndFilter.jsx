@@ -1,7 +1,6 @@
 import React from "react";
 
 const SortAndFilter = props => {
-  console.log(props, "props in sort and filter");
   return (
     <div>
       <form>

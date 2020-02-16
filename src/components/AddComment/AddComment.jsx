@@ -1,42 +1,39 @@
 import React from "react";
 import axios from "axios";
+import ErrorPage from "../ErrorPage";
 
 class AddComment extends React.Component {
   state = {
     username: "",
-    body: ""
+    body: "",
+    error: null
   };
 
   render() {
-    const { body } = this.state;
+    const { body, error } = this.state;
 
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor="username">
-          Username:
-          <input
-            value={this.props.username}
-            name={this.props.username}
-            required
-            type="text"
-            onChange={event =>
-              this.handleChange(event.target.value, "username")
-            }
-          />
-        </label>
-        <label htmlFor="username">
-          Comments:
-          <input
-            required
-            value={body}
-            name={body}
-            type="text"
-            onChange={event => this.handleChange(event.target.value, "body")}
-          />
-        </label>
-        <button>Post comment</button>
-      </form>
-    );
+    if (error) {
+      return <ErrorPage err={error}></ErrorPage>;
+    } else {
+      return (
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="username">
+            Any views? Add your comment here!
+            <br />
+            <input
+              className="commentinput"
+              required
+              value={body}
+              name={body}
+              type="text"
+              onChange={event => this.handleChange(event.target.value, "body")}
+            />
+          </label>
+          <br />
+          <button>Post comment</button>
+        </form>
+      );
+    }
   }
 
   handleChange = (value, key) => {
@@ -61,11 +58,10 @@ class AddComment extends React.Component {
         requestBody
       )
       .then(({ data }) => {
-        console.log(data, "DATA IN POSTCOMMENT");
         return data.comment;
       })
       .catch(err => {
-        console.dir(err, "error in postComment");
+        this.setState({ error: err });
       });
   };
 }

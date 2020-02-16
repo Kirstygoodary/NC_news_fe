@@ -15,21 +15,36 @@ export const getArticles = (searchTerm, filterTerm) => {
     });
 };
 
-/**
- * // use axios params
+export const getArticleById = article_id => {
+  return axios.get(`${baseURL}/articles/${article_id}`).then(response => {
+    return response.data.article;
+  });
+};
 
-import axios from 'axios'
+export const patchArticleById = (article_id, votes) => {
+  return axios
+    .patch(`${baseURL}/articles/${article_id}`, { inc_votes: votes })
+    .then(response => {
+      return response.data.article;
+    });
+};
 
-export const getGames = genre, sort_by, order_by => {
-    const endpoint = genre ? `genre_slug=${genre}` : '';
-    return axios
-    .get('https...', {
-        params: {
-            genre_slug: genre,
-            sort_by: sort_by,
-            order_by: order_by}
-    })
-    .then(...) => {
-          return data.games }
- */
-export default getArticles;
+export const patchCommentById = (comment_id, votes) => {
+  return axios
+    .patch(`${baseURL}/comments/${comment_id}`, { inc_votes: votes })
+    .then(response => {
+      return response.data.comment;
+    });
+};
+
+export const deleteComment = comment_id => {
+  return axios.delete(`${baseURL}/comments/${comment_id}`).then(response => {});
+};
+
+export const postComment = (article_id, body) => {
+  return axios
+    .post(`${baseURL}/articles/${article_id}/comments`, body)
+    .then(response => {
+      return response.data.comment;
+    });
+};
